@@ -61,9 +61,7 @@ define([
             });
 
             if (fieldNodes.length) {
-                return _.reduce(fieldNodes, function(memo, node) {
-                    return memo.AND(node);
-                });
+                return _.reduce(fieldNodes, parser.AND);
             } else {
                 return null;
             }
