@@ -6,6 +6,13 @@ Backbone components for HP Haven parametric refinement.
 
 Documentation can be found [here](http://hpautonomy.github.io/js-parametric-refinement).
 
+## Usage
+    bower install hp-autonomy-js-databases-view
+
+This repo exposes two Backbone Collections. The selected values collection represents the parametric field values which
+the user has selected, and the display collection takes this collection and combines it with a collection of values
+available on the server in order to back a View.
+
 ## Is it any good?
 Yes!
 
