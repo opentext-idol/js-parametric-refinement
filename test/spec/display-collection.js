@@ -119,6 +119,22 @@ define([
             expect(this.collection.get('date_of_birth').get('displayName')).toBe('Date Of Birth');
         });
 
+        it('should handle field names which begin with _', function() {
+            this.selectedParametricValues.add([
+                {field: '_jedi_knight', value: 'Yoda'}
+            ]);
+
+            expect(this.collection.get('_jedi_knight').get('displayName')).toBe('Jedi Knight');
+        });
+
+        it('should handle field names which contain consecutive _s', function() {
+            this.selectedParametricValues.add([
+                {field: 'jedi___knight', value: 'Yoda'}
+            ]);
+
+            expect(this.collection.get('jedi___knight').get('displayName')).toBe('Jedi Knight');
+        });
+
         describe('after a field value from the parametric collection is selected', function() {
             beforeEach(function() {
                 this.selectedParametricValues.add({field: 'AGE', value: '4'});

@@ -24,9 +24,10 @@ define([
 
     // Prettify the given field name for display
     function prettifyFieldName(name) {
-        return _.map(name.split('_'), function(word) {
+        // Compact to deal with field names which begin with underscore or contain consecutive underscores
+        return _.chain(name.split('_')).compact().map(function(word) {
             return word[0].toUpperCase() + word.slice(1);
-        }).join(' ');
+        }).value().join(' ');
     }
 
     /**
