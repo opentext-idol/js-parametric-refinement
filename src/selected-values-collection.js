@@ -13,6 +13,12 @@ define([
     'fieldtext/js/field-text-parser'
 ], function(Backbone, _, parser) {
 
+    function escapeFieldTextValue(value) {
+        return _.reduce([',','}','{'], function(token) {
+            return value.replace(token, encodeURIComponent(token))
+        }, value);
+    }
+
     /**
      * The attributes on each model in a [SelectedValuesCollection]{@link module:selected-values-collection}.
      * @typedef module:selected-values-collection~SelectedValuesCollection.SelectedValueAttributes
@@ -57,7 +63,7 @@ define([
          */
         toFieldTextNode: function() {
             var fieldNodes = _.map(this.toFieldsAndValues(), function(values, field) {
-                return new parser.ExpressionNode('MATCH', [field], values);
+                return new parser.ExpressionNode('MATCH', [field], _.map(values, escapeFieldTextValue));
             });
 
             if (fieldNodes.length) {
