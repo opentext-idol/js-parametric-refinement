@@ -24,9 +24,10 @@ Available grunt tasks:
 * grunt coverage : Generates code coverage statistics
 * grunt doc : Generates project documentation
 * grunt lint : Runs js-hint
+* grunt watch-test : Watches for changes and runs the tests
 * grunt server : Starts a server on localhost:8000 which can be used to view documentation and run Jasmine tests in the browser
 * grunt watch-doc : Watches for changes and regenerates the documentation
-* grunt watch-test : Watches for changes and regenerates the spec runner
+* grunt watch-build-test : Watches for changes and regenerates the spec runner
 
 ## License
 Copyright 2015 Hewlett-Packard Development Company, L.P.

@@ -1,19 +1,19 @@
-var jasmineIstanbulTemplate = require('grunt-template-jasmine-istanbul');
-var jasmineRequireTemplate = require('grunt-template-jasmine-requirejs');
+const jasmineIstanbulTemplate = require('grunt-template-jasmine-istanbul');
+const jasmineRequireTemplate = require('grunt-template-jasmine-requirejs');
 
-var buildDirectory = 'bin/';
-var coverageRunner = 'coverage-runner.html';
-var documentationBase = 'doc';
-var gitHubPagesMessage = 'Update documentation';
-var gitHubPagesSource = '**/*';
-var jasmineSpecRunner = 'spec-runner.html';
-var requireConfigFile = 'test/require-config.js';
-var serverPort = 8000;
-var sourcePath = 'src/**/*.js';
-var specPath = 'test/spec/**/*.js';
-var docFiles = [sourcePath, 'README.md'];
+const buildDirectory = 'bin/';
+const coverageRunner = 'coverage-runner.html';
+const documentationBase = 'doc';
+const gitHubPagesMessage = 'Update documentation';
+const gitHubPagesSource = '**/*';
+const jasmineSpecRunner = 'spec-runner.html';
+const requireConfigFile = 'test/require-config.js';
+const serverPort = 8000;
+const sourcePath = 'src/**/*.js';
+const specPath = 'test/spec/**/*.js';
+const docFiles = [sourcePath, 'README.md'];
 
-var requireCallback = function() {
+const requireCallback = function() {
     define('instrumented', ['module'], function(module) {
         return module.config().src;
     });
@@ -37,7 +37,7 @@ var requireCallback = function() {
     });
 };
 
-module.exports = function(grunt) {
+module.exports = (grunt) => {
     grunt.initConfig({
         clean: [
             '.grunt',
@@ -49,13 +49,13 @@ module.exports = function(grunt) {
         connect: {
             server: {
                 options: {
-                    port: serverPort
+                    port: serverPort,
+                    useAvailablePort: true
                 }
             }
         },
         jasmine: {
             options: {
-                host: 'http://localhost:' + serverPort,
                 specs: specPath
             },
             coverage: {
@@ -172,13 +172,17 @@ module.exports = function(grunt) {
             }
         },
         watch: {
+            buildTest: {
+                files: [sourcePath, 'test/**/*.js'],
+                tasks: ['jasmine:test:build']
+            },
             doc: {
                 files: docFiles,
                 tasks: ['doc']
             },
             test: {
                 files: [sourcePath, 'test/**/*.js'],
-                tasks: ['jasmine:test:build']
+                tasks: ['jasmine:test']
             }
         }
     });
@@ -191,17 +195,17 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-gh-pages');
     grunt.loadNpmTasks('grunt-jsdoc');
 
-    grunt.registerTask('coverage', ['connect:server', 'jasmine:coverage']);
+    grunt.registerTask('coverage', ['jasmine:coverage']);
     grunt.registerTask('doc', ['jsdoc']);
     grunt.registerTask('lint', ['jshint']);
-    grunt.registerTask('test', ['connect:server', 'jasmine:test']);
+    grunt.registerTask('test', ['jasmine:test']);
 
     grunt.registerTask('server', ['connect:server:keepalive']);
     grunt.registerTask('watch-doc', ['doc', 'watch:doc']);
-    grunt.registerTask('watch-test', ['jasmine:test:build', 'watch:test']);
+    grunt.registerTask('watch-test', ['jasmine:test', 'watch:test']);
+    grunt.registerTask('watch-build-test', ['jasmine:test:build', 'watch:buildTest']);
 
-    grunt.registerTask('ci', ['lint', 'connect:server', 'jasmine']);
+    grunt.registerTask('ci', ['lint', 'jasmine']);
     grunt.registerTask('push-doc', ['doc', 'gh-pages:default']);
     grunt.registerTask('push-doc-travis', ['doc', 'gh-pages:travis']);
-
 };
