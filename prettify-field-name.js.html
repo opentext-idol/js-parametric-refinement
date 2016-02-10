@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>HP Autonomy JS Parametric Refinement Module: selected-values-collection</title>
+	<title>HP Autonomy JS Parametric Refinement Source: prettify-field-name.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -76,102 +76,51 @@
 	<div class="row-fluid">
 
 		
-		<div class="span8">
-			
+			<div class="span12">
+				
 				<div id="main">
 					
 
 
-	<h1 class="page-title">Module: selected-values-collection</h1>
+		<h1 class="page-title">Source: prettify-field-name.js</h1>
+    
 <section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">/*
+ * Copyright 2014-2016 Hewlett-Packard Development Company, L.P.
+ * Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License.
+ */
 
-<header>
-    <h2>
-    selected-values-collection
-    </h2>
-    
-</header>
+/**
+ * @module prettify-field-name
+ */
+define([
+    'underscore'
+], function(_) {
 
-<article>
-    <div class="container-overview">
-    
+    /**
+     * Prettify the given field name for display. Replaces underscores with spaces and capitalises the first letter of
+     * each word.
+     * @alias module:prettify-field-name
+     * @function
+     * @param {String} name The input field name
+     * @returns {String} The display name
+     */
+    function prettifyFieldName(name) {
+        // Compact to deal with field names which begin with underscore or contain consecutive underscores
+        return _.chain(name.split('_')).compact().map(function(word) {
+            return word[0].toUpperCase() + word.slice(1).toLowerCase();
+        }).value().join(' ');
+    }
 
-    
-        
+    return prettifyFieldName;
 
-        
-<dl class="details">
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="selected-values-collection.js.html">selected-values-collection.js</a>,
-				 <a href="selected-values-collection.js.html#sunlight-1-line-6">line 6</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-selected-values-collection-SelectedValuesCollection.html">SelectedValuesCollection</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
+});
+</pre>
+	</article>
 </section>
+
 
 
 
@@ -195,10 +144,6 @@
 				</footer>
 			</div>
 
-			
-			<div class="span3">
-				<div id="toc"></div>
-			</div>
 			
 			<br clear="both">
 		</div>

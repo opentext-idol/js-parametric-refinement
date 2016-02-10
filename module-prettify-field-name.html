@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>HP Autonomy JS Parametric Refinement Class: SelectedValuesCollection</title>
+	<title>HP Autonomy JS Parametric Refinement Module: prettify-field-name</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -82,14 +82,12 @@
 					
 
 
-	<h1 class="page-title">Class: SelectedValuesCollection</h1>
+	<h1 class="page-title">Module: prettify-field-name</h1>
 <section>
 
 <header>
     <h2>
-        <span class="ancestors"><a href="module-selected-values-collection.html">selected-values-collection</a>~</span>
-    
-    SelectedValuesCollection
+    prettify-field-name
     </h2>
     
 </header>
@@ -97,11 +95,9 @@
 <article>
     <div class="container-overview">
     
-
-    
         
 <dt>
-    <h4 class="name" id="SelectedValuesCollection"><span class="type-signature"></span>new SelectedValuesCollection<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="module:prettify-field-name"><span class="type-signature"></span>require("prettify-field-name")<span class="signature">(name)</span><span class="type-signature"> &rarr; {String}</span></h4>
     
     
 </dt>
@@ -109,8 +105,7 @@
     
     
     <div class="description">
-        <p>Collection designed to be the only mutable store for the selected parametric values in an application. Every model<br>should have string &quot;field&quot; and &quot;value&quot; attributes.</p>
-<p><p> The Backbone.Collection.modelId method is used to ensure that models with different field and value are considered<br>unique, without having to specify an id on each model explicitly.</p>
+        <p>Prettify the given field name for display. Replaces underscores with spaces and capitalises the first letter of<br>each word.</p>
     </div>
     
 
@@ -119,307 +114,10 @@
     
     
     
-    
-    
-<dl class="details">
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="selected-values-collection.js.html">selected-values-collection.js</a>,
-				 <a href="selected-values-collection.js.html#sunlight-1-line-28">line 28</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-    
-    </div>
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        <ul>
-            <li>Backbone.View</li>
-        </ul>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-            
-<dt>
-    <h4 class="name" id="toFieldsAndValues"><span class="type-signature"></span>toFieldsAndValues<span class="signature">()</span><span class="type-signature"> &rarr; {Object.&lt;string, Array.&lt;string>>}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Returns a map of field name to list of field values.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="selected-values-collection.js.html">selected-values-collection.js</a>,
-				 <a href="selected-values-collection.js.html#sunlight-1-line-48">line 48</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">Object.&lt;string, Array.&lt;string>></span>
-
-
-	</dd>
-</dl>
-
-
+        <h5>Parameters:</h5>
         
-    
-    
-</dd>
 
-        
-            
-<dt>
-    <h4 class="name" id="toFieldTextNode"><span class="type-signature"></span>toFieldTextNode<span class="signature">()</span><span class="type-signature"> &rarr; {parser.ExpressionNode}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Create a field text node from this collection. Returns null if the collection is empty.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-	<dt class="tag-source">Source:</dt>
-	<dd class="tag-source">
-		<ul class="dummy">
-			<li>
-				<a href="selected-values-collection.js.html">selected-values-collection.js</a>,
-				 <a href="selected-values-collection.js.html#sunlight-1-line-64">line 64</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-	
-
-	
-
-	
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">parser.ExpressionNode</span>
-
-
-	</dd>
-</dl>
-
-
-        
-    
-    
-</dd>
-
-        </dl>
-    
-
-    
-        <h3 class="subsection-title">Type Definitions</h3>
-
-        <dl>
-                
-<dt class="name" id=".SelectedValueAttributes">
-    <h4>SelectedValueAttributes</h4>
-
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>The attributes on each model in a <a href="module-selected-values-collection.html">SelectedValuesCollection</a>.</p>
-    </div>
-    
-
-    
-
-    
-<dl class="details">
-	
-
-	<h5 class="subsection-title">Properties:</h5>
-
-	<dl>
-
-<table class="props table table-striped">
+<table class="params table table-striped">
     <thead>
 	<tr>
 		
@@ -441,13 +139,13 @@
 
         <tr>
             
-                <td class="name"><code>field</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -457,37 +155,17 @@
 
             
 
-            <td class="description last"><p>The parametric field name</p></td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The parametric field value</p></td>
+            <td class="description last"><p>The input field name</p></td>
         </tr>
 
 	
 	</tbody>
 </table>
-</dl>
 
+    
+    
+    
+<dl class="details">
 	
 
 	
@@ -513,8 +191,91 @@
 	<dd class="tag-source">
 		<ul class="dummy">
 			<li>
-				<a href="selected-values-collection.js.html">selected-values-collection.js</a>,
-				 <a href="selected-values-collection.js.html#sunlight-1-line-22">line 22</a>
+				<a href="prettify-field-name.js.html">prettify-field-name.js</a>,
+				 <a href="prettify-field-name.js.html#sunlight-1-line-21">line 21</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>The display name</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">String</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+    
+
+    
+        
+
+        
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="prettify-field-name.js.html">prettify-field-name.js</a>,
+				 <a href="prettify-field-name.js.html#sunlight-1-line-6">line 6</a>
 			</li>
 		</ul>
 	</dd>
@@ -528,10 +289,24 @@
 </dl>
 
 
+        
     
-</dd>
+    </div>
 
-            </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 
     
