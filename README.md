@@ -7,7 +7,7 @@ Backbone components for HP Haven parametric refinement.
 Documentation can be found [here](http://hpautonomy.github.io/js-parametric-refinement).
 
 ## Usage
-    bower install hp-autonomy-js-databases-view
+    bower install hp-autonomy-js-parametric-refinement
 
 This repo exposes two Backbone Collections. The selected values collection represents the parametric field values which
 the user has selected, and the display collection takes this collection and combines it with a collection of values
@@ -24,11 +24,12 @@ Available grunt tasks:
 * grunt coverage : Generates code coverage statistics
 * grunt doc : Generates project documentation
 * grunt lint : Runs js-hint
+* grunt watch-test : Watches for changes and runs the tests
 * grunt server : Starts a server on localhost:8000 which can be used to view documentation and run Jasmine tests in the browser
 * grunt watch-doc : Watches for changes and regenerates the documentation
-* grunt watch-test : Watches for changes and regenerates the spec runner
+* grunt watch-build-test : Watches for changes and regenerates the spec runner
 
 ## License
-Copyright 2015 Hewlett-Packard Development Company, L.P.
+Copyright 2015-2016 Hewlett-Packard Development Company, L.P.
 
 Licensed under the MIT License (the "License"); you may not use this project except in compliance with the License.

@@ -8,8 +8,9 @@
  */
 define([
     'backbone',
-    'underscore'
-], function(Backbone, _) {
+    'underscore',
+    './prettify-field-name'
+], function(Backbone, _, prettifyFieldName) {
 
     // When we don't know the count for a value (because it is in the selected values collection but not the parametric
     // collection) use null instead
@@ -20,14 +21,6 @@ define([
         return _.map(values, function(value) {
             return {id: value, count: UNKNOWN_COUNT, selected: true};
         });
-    }
-
-    // Prettify the given field name for display
-    function prettifyFieldName(name) {
-        // Compact to deal with field names which begin with underscore or contain consecutive underscores
-        return _.chain(name.split('_')).compact().map(function(word) {
-            return word[0].toUpperCase() + word.slice(1);
-        }).value().join(' ');
     }
 
     /**
