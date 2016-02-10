@@ -93,8 +93,12 @@ define([
         });
 
         it('sets the displayName attribute on all of the models', function() {
-            _.each(['NAME', 'AGE', 'VEHICLE'], function(field) {
-                expect(this.collection.get(field).get('displayName')).toBe(field);
+            _.each({
+                NAME: 'Name',
+                AGE: 'Age',
+                VEHICLE: 'Vehicle'
+            }, function(displayName, field) {
+                expect(this.collection.get(field).get('displayName')).toBe(displayName);
             }, this);
         });
 
@@ -109,7 +113,7 @@ define([
             expect(this.collection.get('VEHICLE').fieldValues.get('van').get('selected')).toBe(true);
         });
 
-        it('prettifies the displayName attributes by replacing _ with " " and capitalising the first letter of words', function() {
+        it('prettifies the displayName attributes', function() {
             this.selectedParametricValues.add([
                 {field: 'jedi_knight', value: 'Yoda'},
                 {field: 'date_of_birth', value: '06/07/08'}
@@ -117,22 +121,6 @@ define([
 
             expect(this.collection.get('jedi_knight').get('displayName')).toBe('Jedi Knight');
             expect(this.collection.get('date_of_birth').get('displayName')).toBe('Date Of Birth');
-        });
-
-        it('should handle field names which begin with _', function() {
-            this.selectedParametricValues.add([
-                {field: '_jedi_knight', value: 'Yoda'}
-            ]);
-
-            expect(this.collection.get('_jedi_knight').get('displayName')).toBe('Jedi Knight');
-        });
-
-        it('should handle field names which contain consecutive _s', function() {
-            this.selectedParametricValues.add([
-                {field: 'jedi___knight', value: 'Yoda'}
-            ]);
-
-            expect(this.collection.get('jedi___knight').get('displayName')).toBe('Jedi Knight');
         });
 
         describe('after a field value from the parametric collection is selected', function() {
