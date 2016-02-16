@@ -10,14 +10,10 @@
 define([
     'backbone',
     'underscore',
-    'fieldtext/js/field-text-parser'
-], function(Backbone, _, parser) {
-
-    function escapeFieldTextValue(value) {
-        return _.reduce([',','}','{'], function(token) {
-            return value.replace(token, encodeURIComponent(token))
-        }, value);
-    }
+    'fieldtext/js/field-text-parser',
+    './to-fields-and-values',
+    './to-field-text-node'
+], function(Backbone, _, parser, toFieldsAndValues, toFieldTextNode) {
 
     /**
      * The attributes on each model in a [SelectedValuesCollection]{@link module:selected-values-collection}.
@@ -46,15 +42,7 @@ define([
          * @return {Object.<string, string[]>}
          */
         toFieldsAndValues: function() {
-            var selectedFields = {};
-
-            _.each(this.groupBy('field'), function(selectedModels, field) {
-                selectedFields[field] = _.map(selectedModels, function(selectedModel) {
-                    return selectedModel.get('value');
-                });
-            });
-
-            return selectedFields;
+            return toFieldsAndValues(this.toJSON());
         },
 
         /**
@@ -62,15 +50,7 @@ define([
          * @return {parser.ExpressionNode}
          */
         toFieldTextNode: function() {
-            var fieldNodes = _.map(this.toFieldsAndValues(), function(values, field) {
-                return new parser.ExpressionNode('MATCH', [field], _.map(values, escapeFieldTextValue));
-            });
-
-            if (fieldNodes.length) {
-                return _.reduce(fieldNodes, parser.AND);
-            } else {
-                return null;
-            }
+            return toFieldTextNode(this.toJSON())
         }
     });
 
