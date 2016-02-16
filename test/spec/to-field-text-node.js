@@ -5,9 +5,8 @@
 
 define([
     'backbone',
-    'src/to-field-text-node',
-    'underscore'
-], function(Backbone, toFieldTextNode, _) {
+    'src/to-field-text-node'
+], function(Backbone, toFieldTextNode) {
 
     describe('toFieldTextNode', function() {
         beforeEach(function() {
