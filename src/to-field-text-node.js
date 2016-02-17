@@ -17,8 +17,10 @@ define([
     return function(parametricValuesArray) {
         var fieldsAndValues = toFieldsAndValues(parametricValuesArray);
 
-        var fieldNodes = _.map(fieldsAndValues, function(values, field) {
-            return new parser.ExpressionNode('MATCH', [field], _.map(values, escapeFieldTextValue));
+        var fieldNodes = _.map(fieldsAndValues, function(data, field) {
+            var operator = data.numeric ? 'EQUAL' : 'MATCH';
+
+            return new parser.ExpressionNode(operator, [field], _.map(data.values, escapeFieldTextValue));
         });
 
         if (fieldNodes.length) {
