@@ -37,7 +37,7 @@ const requireCallback = function() {
     });
 };
 
-module.exports = (grunt) => {
+module.exports = function(grunt) {
     grunt.initConfig({
         clean: [
             '.grunt',
@@ -56,7 +56,8 @@ module.exports = (grunt) => {
         },
         jasmine: {
             options: {
-                specs: specPath
+                specs: specPath,
+                keepRunner: true
             },
             coverage: {
                 src: sourcePath,
