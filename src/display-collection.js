@@ -163,7 +163,8 @@ define([
                 var field = parametricModel.get('name');
 
                 // Track the selected values for this field so we don't consider them twice
-                var selectedValues = selectedFields[field] || [];
+                var selectedField = selectedFields[field];
+                var selectedValues = selectedField ? selectedField.values : [];
 
                 var initialValues = _.map(parametricModel.get('values'), function(item) {
                     var value = item.value;
@@ -182,12 +183,12 @@ define([
                 // Delete the selected field from the map so we don't consider it twice
                 delete selectedFields[field];
 
-                return new DisplayModel({id: field}, {initialValues: initialValues});
+                return new DisplayModel({id: field, numeric: parametricModel.get('numeric')}, {initialValues: initialValues});
             });
 
             // Handle any selected fields which were not present in the parametric collection
-            newModels = newModels.concat(_.map(selectedFields, function(values, field) {
-                return new DisplayModel({id: field}, {initialValues: attributesForUnknownCountValues(values)});
+            newModels = newModels.concat(_.map(selectedFields, function(data, field) {
+                return new DisplayModel({id: field, numeric: data.numeric}, {initialValues: attributesForUnknownCountValues(data.values)});
             }));
 
             return newModels;

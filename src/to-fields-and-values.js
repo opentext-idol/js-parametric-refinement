@@ -13,7 +13,10 @@ define([
             .groupBy('field')
             .mapObject(function(selectedModels) {
                 // pick all the values from the resulting array
-                return _.pluck(selectedModels, 'value');
+                return {
+                    numeric: selectedModels[0].numeric,
+                    values: _.pluck(selectedModels, 'value')
+                }
             })
             .value();
     }

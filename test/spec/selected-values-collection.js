@@ -29,15 +29,15 @@ define([
             var fields = _.keys(fieldsAndValues);
             expect(fields.length).toBe(3);
 
-            expect(fieldsAndValues.NAME.length).toBe(2);
-            expect(fieldsAndValues.NAME).toContain('penny');
-            expect(fieldsAndValues.NAME).toContain('bob');
+            expect(fieldsAndValues.NAME.values.length).toBe(2);
+            expect(fieldsAndValues.NAME.values).toContain('penny');
+            expect(fieldsAndValues.NAME.values).toContain('bob');
 
-            expect(fieldsAndValues.FRIEND.length).toBe(1);
-            expect(fieldsAndValues.FRIEND).toContain('penny');
+            expect(fieldsAndValues.FRIEND.values.length).toBe(1);
+            expect(fieldsAndValues.FRIEND.values).toContain('penny');
 
-            expect(fieldsAndValues.AGE.length).toBe(1);
-            expect(fieldsAndValues.AGE).toContain('25');
+            expect(fieldsAndValues.AGE.values.length).toBe(1);
+            expect(fieldsAndValues.AGE.values).toContain('25')
         });
 
         describe('toFieldTextNode', function() {

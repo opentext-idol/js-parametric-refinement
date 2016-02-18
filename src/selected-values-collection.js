@@ -16,10 +16,16 @@ define([
 ], function(Backbone, _, parser, toFieldsAndValues, toFieldTextNode) {
 
     /**
+     * @typedef module:selected-values-collection~SelectedValuesCollection.FieldData
+     * @property {String[]} values The values of the field
+     * @property {boolean} numeric True if the parametric field is numeric; false otherwise
+     */
+    /**
      * The attributes on each model in a [SelectedValuesCollection]{@link module:selected-values-collection}.
      * @typedef module:selected-values-collection~SelectedValuesCollection.SelectedValueAttributes
      * @property {string} field The parametric field name
      * @property {string} value The parametric field value
+     * @property {boolean} numeric True if the parametric field is numeric; false otherwise
      */
     /**
      * Collection designed to be the only mutable store for the selected parametric values in an application. Every model
@@ -39,7 +45,7 @@ define([
 
         /**
          * Returns a map of field name to list of field values.
-         * @return {Object.<string, string[]>}
+         * @return {Object.<string, SelectedValuesCollection.FieldData>}
          */
         toFieldsAndValues: function() {
             return toFieldsAndValues(this.toJSON());

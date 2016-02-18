@@ -206,7 +206,7 @@ module.exports = function(grunt) {
     grunt.registerTask('watch-test', ['jasmine:test', 'watch:test']);
     grunt.registerTask('watch-build-test', ['jasmine:test:build', 'watch:buildTest']);
 
-    grunt.registerTask('ci', ['lint', 'jasmine']);
+    grunt.registerTask('ci', ['lint', 'test', 'coverage']);
     grunt.registerTask('push-doc', ['doc', 'gh-pages:default']);
     grunt.registerTask('push-doc-travis', ['doc', 'gh-pages:travis']);
 };
