@@ -1,10 +1,10 @@
 # HP Autonomy JS Parametric Refinement
 
-[![Build Status](https://travis-ci.org/hpautonomy/js-parametric-refinement.svg?branch=master)](https://travis-ci.org/hpautonomy/js-parametric-refinement)
+[![Build Status](https://travis-ci.org/hpe-idol/js-parametric-refinement.svg?branch=master)](https://travis-ci.org/hpe-idol/js-parametric-refinement)
 
-Backbone components for HP Haven parametric refinement.
+Backbone components for HPE Haven parametric refinement.
 
-Documentation can be found [here](http://hpautonomy.github.io/js-parametric-refinement).
+Documentation can be found [here](http://hpe-idol.github.io/js-parametric-refinement).
 
 ## Usage
     bower install hp-autonomy-js-parametric-refinement
@@ -30,6 +30,6 @@ Available grunt tasks:
 * grunt watch-build-test : Watches for changes and regenerates the spec runner
 
 ## License
-Copyright 2015-2016 Hewlett-Packard Development Company, L.P.
+Copyright 2015-2016 Hewlett Packard Enterprise Development LP
 
 Licensed under the MIT License (the "License"); you may not use this project except in compliance with the License.
