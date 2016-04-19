@@ -23,6 +23,11 @@ define([
         });
     }
 
+    // True if the text is matched by the search
+    function searchMatches(text, search) {
+        return text.toLowerCase().indexOf(search.toLowerCase()) > -1;
+    }
+
     /**
      * The attributes set on each model in a [ValuesCollection]{@link module:display-collection~ValuesCollection}.
      * @typedef module:display-collection~ValuesCollection.ValueModelAttributes
@@ -96,11 +101,19 @@ define([
         initialize: function(models, options) {
             this.parametricCollection = options.parametricCollection;
             this.selectedParametricValues = options.selectedParametricValues;
+            this.filterModel = options.filterModel;
+
+            if(this.filterModel) {
+                this.createModels = _.compose(this.filterModels, this.getResolvedDisplayModels);
+            } else {
+                this.createModels = this.getResolvedDisplayModels;
+            }
 
             this.listenTo(this.selectedParametricValues, 'add', this.onSelectedValueAdd);
             this.listenTo(this.selectedParametricValues, 'remove', this.onSelectedValueRemove);
             this.listenTo(this.selectedParametricValues, 'reset', this.onReset);
             this.listenTo(this.parametricCollection, 'reset', this.onReset);
+            this.listenTo(this.filterModel, 'change:text', this.onReset);
 
             Array.prototype.push.apply(models, this.createModels());
         },
@@ -156,7 +169,7 @@ define([
          * @private
          * @return {module:display-collection~DisplayModel[]}
          */
-        createModels: function() {
+        getResolvedDisplayModels: function() {
             var selectedFields = this.selectedParametricValues.toFieldsAndValues();
 
             var newModels = this.parametricCollection.map(function(parametricModel) {
@@ -192,6 +205,35 @@ define([
             }));
 
             return newModels;
+        },
+
+        filterModels: function(models) {
+            var searchText = this.filterModel.get('text');
+
+            if (searchText) {
+                return _.chain(models)
+                    .map(function(model) {
+                        var valueModelAttributes;
+
+                        if (searchMatches(model.get('displayName'), searchText)) {
+                            // Keep all value models
+                            valueModelAttributes = model.fieldValues.models
+                        } else {
+                            // Filter value models
+                            valueModelAttributes = _.filter(model.fieldValues.models, function(model) {
+                                return searchMatches(model.id, searchText);
+                            });
+                        }
+
+                        return new DisplayModel({id: model.id}, {initialValues: valueModelAttributes});
+                    }, this)
+                    .filter(function(model) {
+                        return model.fieldValues.length > 0;
+                    })
+                    .value();
+            } else {
+                return models;
+            }
         }
     });
 
