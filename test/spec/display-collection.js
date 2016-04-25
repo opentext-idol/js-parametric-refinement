@@ -35,9 +35,12 @@ define([
                 })
             });
 
+            this.filterModel = new Backbone.Model();
+
             this.collection = new ParametricDisplayCollection([], {
                 parametricCollection: this.parametricCollection,
-                selectedParametricValues: this.selectedParametricValues
+                selectedParametricValues: this.selectedParametricValues,
+                filterModel: this.filterModel
             });
         });
 
@@ -417,6 +420,22 @@ define([
                 expect(this.collection.get('MILES').fieldValues.get('50000').get('selected')).toBe(false);
             });
         });
+
+        it('displays only the field values of a field which incompletely matches the filter when it is applied', function() {
+            this.filterModel.set('text', 'nam');
+
+            expect(this.collection.get('NAME')).toBeDefined();
+            expect(this.collection.get('VEHICLE')).not.toBeDefined();
+        });
+
+        it('displays a filtered category when the filter incompletely matches the value of one of the values of a field', function() {
+            this.filterModel.set('text', 'jen');
+
+            expect(this.collection.get('NAME')).toBeDefined();
+            expect(this.collection.get('NAME').fieldValues.length).toBe(1);
+            expect(this.collection.get('NAME').fieldValues.models[0].id).toBe('jenny');
+            expect(this.collection.get('VEHICLE')).not.toBeDefined();
+        })
     });
 
 });
