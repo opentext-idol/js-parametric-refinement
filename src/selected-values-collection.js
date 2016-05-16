@@ -40,7 +40,7 @@ define([
         modelId: function(attributes) {
             // Models are the same when they have the same field and value
             // This is sufficient since white space is not allowed in an IDOL (or HOD) field name
-            return attributes.field + ' ' + attributes.value;
+            return attributes.field + ' ' + (attributes.value ? attributes.value : attributes.range.join(','));
         },
 
         /**
