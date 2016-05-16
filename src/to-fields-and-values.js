@@ -1,6 +1,7 @@
 define([
     'underscore'
 ], function(_) {
+    "use strict";
 
     /**
      * Returns a map of field name to list of field values.
@@ -9,6 +10,9 @@ define([
     return function(parametricValuesArray) {
         // expects [{field: , value: }, ...]
         return _.chain(parametricValuesArray)
+            .filter(function (entry) {
+                return entry.value;
+            })
             // group the objects by field
             .groupBy('field')
             .mapObject(function(selectedModels) {
