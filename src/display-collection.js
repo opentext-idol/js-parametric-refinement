@@ -121,41 +121,45 @@ define([
         onSelectedValueAdd: function(selectedModel) {
             var field = selectedModel.get('field');
             var value = selectedModel.get('value');
-            var valueModelAttributes = {id: value, count: UNKNOWN_COUNT, selected: true};
-            var fieldModel = this.get(field);
+            if (value) {
+                var valueModelAttributes = {id: value, count: UNKNOWN_COUNT, selected: true};
+                var fieldModel = this.get(field);
 
-            if (fieldModel) {
-                var valueModel = fieldModel.fieldValues.get(value);
+                if (fieldModel) {
+                    var valueModel = fieldModel.fieldValues.get(value);
 
-                if (valueModel) {
-                    valueModel.set('selected', true);
+                    if (valueModel) {
+                        valueModel.set('selected', true);
+                    } else {
+                        fieldModel.fieldValues.add(valueModelAttributes);
+                    }
                 } else {
-                    fieldModel.fieldValues.add(valueModelAttributes);
+                    this.add(new DisplayModel({id: field}, {initialValues: [valueModelAttributes]}));
                 }
-            } else {
-                this.add(new DisplayModel({id: field}, {initialValues: [valueModelAttributes]}));
             }
         },
 
         onSelectedValueRemove: function(selectedModel) {
             var field = selectedModel.get('field');
             var value = selectedModel.get('value');
-            var parametricModel = this.parametricCollection.get(field);
+            if (value) {
+                var parametricModel = this.parametricCollection.get(field);
 
-            var inParametricCollection = parametricModel && _.any(parametricModel.get('values'), function(item) {
-                    return value === item.value;
-                });
+                var inParametricCollection = parametricModel && _.any(parametricModel.get('values'), function (item) {
+                        return value === item.value;
+                    });
 
-            var model = this.get(field);
+                var model = this.get(field);
 
-            if (inParametricCollection) {
-                model.fieldValues.get(value).set('selected', false);
-            } else {
-                // Only remove the value model if the value is not in the parametric collection
-                if (model.fieldValues.length <= 1) {
-                    this.remove(model);
+                if (inParametricCollection) {
+                    model.fieldValues.get(value).set('selected', false);
                 } else {
-                    model.fieldValues.remove(value);
+                    // Only remove the value model if the value is not in the parametric collection
+                    if (model.fieldValues.length <= 1) {
+                        this.remove(model);
+                    } else {
+                        model.fieldValues.remove(value);
+                    }
                 }
             }
         },
