@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/hpautonomy/js-parametric-refinement.git"
+    "url": "https://github.com/hpe-idol/js-parametric-refinement.git"
   },
   "moduleType": [
     "amd"
