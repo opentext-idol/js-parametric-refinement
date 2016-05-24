@@ -28,7 +28,7 @@ define([
         
         parametricValuesArray.forEach(function (data) {
             if (data.range) {
-                fieldNodes.push(new parser.ExpressionNode('NRANGE', [data.field], data.range));
+                fieldNodes.push(new parser.ExpressionNode(data.numeric ? 'NRANGE' : 'RANGE', [data.field], data.range));
             }
         });
 
