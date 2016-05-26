@@ -16,7 +16,7 @@ define([
                 {field: 'FRIEND', value: 'penny'},
                 {field: 'AGE', value: '25'},
                 {field: 'YEAR', range: [1307, 1327], numeric: true},
-                {field: 'DATE', range: [123456789, 123456790]}
+                {field: 'DATE', range: [123456789000, 123456790000]}
             ];
         });
 
@@ -26,7 +26,7 @@ define([
             expect(fieldText).toContain('MATCH{25}:AGE');
             expect(fieldText).toContain('MATCH{penny}:FRIEND');
             expect(fieldText).toContain('NRANGE{1307,1327}:YEAR');
-            expect(fieldText).toContain('RANGE{123456789,123456790}:DATE');
+            expect(fieldText).toContain('RANGE{123456789e,123456790e}:DATE');
         });
 
         it('returns null for an empty collection', function() {
