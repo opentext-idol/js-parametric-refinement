@@ -31,7 +31,7 @@ define([
                 if (data.numeric) {
                     fieldNodes.push(new parser.ExpressionNode('NRANGE', [data.field], data.range));
                 } else {
-                    fieldNodes.push(new parser.ExpressionNode('RANGE', [data.field], [data.range[0] / 1000 + 'e', data.range[1] / 1000 + 'e']));
+                    fieldNodes.push(new parser.ExpressionNode('RANGE', [data.field], [data.range[0] + 'e', data.range[1] + 'e']));
                 }
             }
         });
