@@ -177,17 +177,18 @@ define([
             var selectedFields = this.selectedParametricValues.toFieldsAndValues();
 
             var newModels = this.parametricCollection.map(function(parametricModel) {
-                var field = parametricModel.get('name');
+                var field = parametricModel.get('id');
 
                 // Track the selected values for this field so we don't consider them twice
                 var selectedField = selectedFields[field];
+                // console.log('field', JSON.stringify(field));
+                // console.log('values', JSON.stringify(selectedFields.values));
                 var selectedValues = selectedField ? selectedField.values : [];
 
                 var initialValues = _.map(parametricModel.get('values'), function(item) {
                     var value = item.value;
                     var oldSelectedValuesLength = selectedValues.length;
                     selectedValues = _.without(selectedValues, value);
-
                     // If the length has changed after calling _.without, the value must have been selected
                     var isSelected = oldSelectedValuesLength !== selectedValues.length;
 
@@ -200,13 +201,15 @@ define([
                 // Delete the selected field from the map so we don't consider it twice
                 delete selectedFields[field];
 
-                return new DisplayModel({id: field, numeric: parametricModel.get('numeric')}, {initialValues: initialValues});
+                return new DisplayModel({id: parametricModel.get('id'), numeric: parametricModel.get('numeric')}, {initialValues: initialValues});
             });
 
             // Handle any selected fields which were not present in the parametric collection
             newModels = newModels.concat(_.map(selectedFields, function(data, field) {
                 return new DisplayModel({id: field, numeric: data.numeric}, {initialValues: attributesForUnknownCountValues(data.values)});
             }));
+
+            // console.log('newModels', JSON.stringify(newModels));
 
             return newModels;
         },
