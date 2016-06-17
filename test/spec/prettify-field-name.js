@@ -22,6 +22,10 @@ define([
         it('handles one letter field names', function() {
             expect(prettifyFieldName('a')).toBe('A');
         });
+
+        it('Strips the first part of the field away leaving only text after the last forward slash', function() {
+            expect(prettifyFieldName('/DOCUMENT/Revan')).toBe('Revan');
+        })
     });
 
 });
