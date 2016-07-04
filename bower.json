@@ -5,7 +5,8 @@
   "authors": [
     "Matthew Gordon <matthew.gordon@hpe.com>",
     "Alex Scown <alex.scown@hpe.com>",
-    "Daniel Grayling <daniel.grayling@hpe.com>"
+    "Daniel Grayling <daniel.grayling@hpe.com>",
+    "Will Byrne <will.byrne@hpe.com>"
   ],
   "repository": {
     "type": "git",
