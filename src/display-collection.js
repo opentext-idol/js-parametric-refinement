@@ -181,8 +181,6 @@ define([
 
                 // Track the selected values for this field so we don't consider them twice
                 var selectedField = selectedFields[field];
-                // console.log('field', JSON.stringify(field));
-                // console.log('values', JSON.stringify(selectedFields.values));
                 var selectedValues = selectedField ? selectedField.values : [];
 
                 var initialValues = _.map(parametricModel.get('values'), function(item) {
@@ -205,11 +203,15 @@ define([
             });
 
             // Handle any selected fields which were not present in the parametric collection
-            newModels = newModels.concat(_.map(selectedFields, function(data, field) {
-                return new DisplayModel({id: field, numeric: data.numeric}, {initialValues: attributesForUnknownCountValues(data.values)});
-            }));
-
-            // console.log('newModels', JSON.stringify(newModels));
+            newModels = newModels.concat(_.chain(selectedFields)
+                .map(function (data, field) {
+                    return data.range ? null : new DisplayModel({id: field, numeric: data.numeric}, {
+                        initialValues: attributesForUnknownCountValues(data.values)
+                    })
+                })
+                .compact()
+                .value()
+            );
 
             return newModels;
         },
