@@ -11,13 +11,16 @@ define([
         // expects [{field: , value: }, ...]
         return _.chain(parametricValuesArray)
             .filter(function (entry) {
-                return entry.value;
+                return entry.value || entry.range;
             })
             // group the objects by field
             .groupBy('field')
             .mapObject(function(selectedModels) {
                 // pick all the values from the resulting array
-                return {
+                return selectedModels[0].range ? {
+                    numeric: selectedModels[0].numeric,
+                    range: selectedModels[0].range
+                } : {
                     numeric: selectedModels[0].numeric,
                     values: _.pluck(selectedModels, 'value')
                 }
