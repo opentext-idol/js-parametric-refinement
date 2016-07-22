@@ -28,8 +28,9 @@ define([
             }, {
                 id: '/DOCUMENT/AGE',
                 name: 'AGE',
+                displayName: 'JUST A NUMBER',
                 values: [
-                    {value: '4', count: 2}
+                    {displayName: 'RUDE TO ASK', value: '4', count: 2}
                 ]
             }], {
                 model: Backbone.Model.extend({
@@ -100,11 +101,15 @@ define([
         it('sets the displayName attribute on all of the models', function() {
             _.each({
                 '/DOCUMENT/NAME': 'Name',
-                '/DOCUMENT/AGE': 'Age',
+                '/DOCUMENT/AGE': 'JUST A NUMBER',
                 '/DOCUMENT/VEHICLE': 'Vehicle'
             }, function(displayName, field) {
                 expect(this.collection.get(field).get('displayName')).toBe(displayName);
             }, this);
+        });
+
+        it('sets the displayName attribute on all of the values', function() {
+            expect(this.collection.get('/DOCUMENT/AGE').fieldValues.get('4').get('displayName')).toBe('RUDE TO ASK');
         });
 
         it('sets the field value model selected attribute to false if the value is not selected', function() {
