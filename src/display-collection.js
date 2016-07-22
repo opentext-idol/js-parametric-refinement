@@ -65,7 +65,7 @@ define([
     var DisplayModel = Backbone.Model.extend({
         initialize: function(attributes, options) {
             this.fieldValues = new ValuesCollection(options.initialValues);
-            this.set('displayName', prettifyFieldName(this.id));
+            this.set('displayName', attributes.displayName || prettifyFieldName(this.id));
         }
     });
 
@@ -190,7 +190,7 @@ define([
                     // If the length has changed after calling _.without, the value must have been selected
                     var isSelected = oldSelectedValuesLength !== selectedValues.length;
 
-                    return {id: item.value, count: item.count, selected: isSelected};
+                    return {id: item.value, count: item.count, selected: isSelected, displayName: item.displayName};
                 });
 
                 // Handle any selected values which are not in the parametric collection
@@ -199,7 +199,17 @@ define([
                 // Delete the selected field from the map so we don't consider it twice
                 delete selectedFields[field];
 
-                return new DisplayModel({id: parametricModel.get('id'), numeric: parametricModel.get('numeric')}, {initialValues: initialValues});
+                var attributes = {
+                    id: parametricModel.get('id'),
+                    numeric: parametricModel.get('numeric')
+                };
+
+                var displayName = parametricModel.get('displayName');
+                if (displayName) {
+                    attributes.displayName = displayName;
+                }
+
+                return new DisplayModel(attributes, {initialValues: initialValues});
             });
 
             // Handle any selected fields which were not present in the parametric collection
@@ -230,7 +240,8 @@ define([
                         } else {
                             // Filter value models
                             valueModelAttributes = _.filter(model.fieldValues.models, function(model) {
-                                return searchMatches(model.id, searchText);
+                                var displayName = model.get('displayName');
+                                return searchMatches(displayName || model.id, searchText);
                             });
                         }
 
