@@ -84,7 +84,7 @@ define([
      */
     /**
      * Combines the parametric values selected by the user with the fields and values returned by the server in order
-     * to back a view of parametric values relevent to a search. Once a parametric value has been selected (and added to the
+     * to back a view of parametric values relevant to a search. Once a parametric value has been selected (and added to the
      * selected parametric values collection), it should not be removed until the user deselects it, even if they search for
      * something else.
      * <p>This is designed to be a read only view on the underlying collections and should not be modified externally.
@@ -100,6 +100,7 @@ define([
 
         initialize: function(models, options) {
             this.parametricCollection = options.parametricCollection;
+            this.restrictedParametricCollection = options.restrictedParametricCollection;
             this.selectedParametricValues = options.selectedParametricValues;
             this.filterModel = options.filterModel;
 
@@ -113,6 +114,7 @@ define([
             this.listenTo(this.selectedParametricValues, 'remove', this.onSelectedValueRemove);
             this.listenTo(this.selectedParametricValues, 'reset', this.onReset);
             this.listenTo(this.parametricCollection, 'reset', this.onReset);
+            this.listenTo(this.restrictedParametricCollection, 'reset', this.onReset);
             this.listenTo(this.filterModel, 'change:text', this.onReset);
 
             Array.prototype.push.apply(models, this.createModels());
@@ -183,15 +185,28 @@ define([
                 var selectedField = selectedFields[field];
                 var selectedValues = selectedField ? selectedField.values : [];
 
-                var initialValues = _.map(parametricModel.get('values'), function(item) {
-                    var value = item.value;
-                    var oldSelectedValuesLength = selectedValues.length;
-                    selectedValues = _.without(selectedValues, value);
-                    // If the length has changed after calling _.without, the value must have been selected
-                    var isSelected = oldSelectedValuesLength !== selectedValues.length;
+                var getInitialValues = function(collection) {
+                    return _.map(collection.get(parametricModel).get('values'), function(item) {
+                        var value = item.value;
+                        var oldSelectedValuesLength = selectedValues.length;
+                        selectedValues = _.without(selectedValues, value);
+                        // If the length has changed after calling _.without, the value must have been selected
+                        var isSelected = oldSelectedValuesLength !== selectedValues.length;
 
-                    return {id: item.value, count: item.count, selected: isSelected, displayName: item.displayName};
-                });
+                        return {id: item.value, count: item.count, selected: isSelected, displayName: item.displayName};
+                    });
+                };
+
+                var initialValues;
+                if (this.restrictedParametricCollection){
+                    if (this.restrictedParametricCollection.get(parametricModel)){
+                        initialValues = getInitialValues(this.restrictedParametricCollection)
+                    } else {
+                        initialValues = [];
+                    }
+                } else {
+                    initialValues = getInitialValues(this.parametricCollection)
+                }
 
                 // Handle any selected values which are not in the parametric collection
                 initialValues = initialValues.concat(attributesForUnknownCountValues(selectedValues));
@@ -210,7 +225,7 @@ define([
                 }
 
                 return new DisplayModel(attributes, {initialValues: initialValues});
-            });
+            }, this);
 
             // Handle any selected fields which were not present in the parametric collection
             newModels = newModels.concat(_.chain(selectedFields)
