@@ -9,7 +9,7 @@ require.config({
         backbone: 'bower_components/backbone/backbone',
         fieldtext: 'bower_components/hp-autonomy-fieldtext-js/src',
         jquery: 'bower_components/jquery/jquery',
-        peg: 'bower_components/pegjs/peg-0.8.0',
+        peg: 'bower_components/pegjs/peg-0.10.0',
         text: 'bower_components/requirejs-text/text',
         underscore: 'bower_components/underscore/underscore'
     },
