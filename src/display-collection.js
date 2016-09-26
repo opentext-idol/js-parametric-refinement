@@ -216,7 +216,8 @@ define([
 
                 var attributes = {
                     id: parametricModel.get('id'),
-                    numeric: parametricModel.get('numeric')
+                    numeric: parametricModel.get('numeric'),
+                    dataType: 'parametric'
                 };
 
                 var displayName = parametricModel.get('displayName');
@@ -230,7 +231,7 @@ define([
             // Handle any selected fields which were not present in the parametric collection
             newModels = newModels.concat(_.chain(selectedFields)
                 .map(function (data, field) {
-                    return data.range ? null : new DisplayModel({id: field, numeric: data.numeric}, {
+                    return data.range ? null : new DisplayModel({id: field, numeric: data.numeric, dataType: 'parametric'}, {
                         initialValues: attributesForUnknownCountValues(data.values)
                     })
                 })
@@ -260,7 +261,7 @@ define([
                             });
                         }
 
-                        return new DisplayModel({id: model.id}, {initialValues: valueModelAttributes});
+                        return new DisplayModel({id: model.id, dataType: 'parametric'}, {initialValues: valueModelAttributes});
                     }, this)
                     .filter(function(model) {
                         return model.fieldValues.length > 0;
