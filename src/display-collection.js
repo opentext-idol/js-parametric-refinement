@@ -100,7 +100,6 @@ define([
 
         initialize: function(models, options) {
             this.parametricCollection = options.parametricCollection;
-            this.restrictedParametricCollection = options.restrictedParametricCollection;
             this.selectedParametricValues = options.selectedParametricValues;
             this.filterModel = options.filterModel;
 
@@ -114,7 +113,6 @@ define([
             this.listenTo(this.selectedParametricValues, 'remove', this.onSelectedValueRemove);
             this.listenTo(this.selectedParametricValues, 'reset', this.onReset);
             this.listenTo(this.parametricCollection, 'reset', this.onReset);
-            this.listenTo(this.restrictedParametricCollection, 'reset', this.onReset);
             this.listenTo(this.filterModel, 'change:text', this.onReset);
 
             Array.prototype.push.apply(models, this.createModels());
@@ -185,31 +183,16 @@ define([
                 var selectedField = selectedFields[field];
                 var selectedValues = selectedField ? selectedField.values : [];
 
-                var getInitialValues = function(collection) {
-                    return _.map(collection.get(parametricModel).get('values'), function(item) {
+                var initialValues = _.map(parametricModel.get('values'), function(item) {
                         var value = item.value;
                         var oldSelectedValuesLength = selectedValues.length;
                         selectedValues = _.without(selectedValues, value);
                         // If the length has changed after calling _.without, the value must have been selected
                         var isSelected = oldSelectedValuesLength !== selectedValues.length;
-
                         return {id: item.value, count: item.count, selected: isSelected, displayName: item.displayName};
-                    });
-                };
-
-                var initialValues;
-                if (this.restrictedParametricCollection){
-                    if (this.restrictedParametricCollection.get(parametricModel)){
-                        initialValues = getInitialValues(this.restrictedParametricCollection)
-                    } else {
-                        initialValues = [];
-                    }
-                } else {
-                    initialValues = getInitialValues(this.parametricCollection)
-                }
-
-                // Handle any selected values which are not in the parametric collection
-                initialValues = initialValues.concat(attributesForUnknownCountValues(selectedValues));
+                    })
+                    // Handle any selected values which are not in the parametric collection
+                    .concat(attributesForUnknownCountValues(selectedValues));
 
                 // Delete the selected field from the map so we don't consider it twice
                 delete selectedFields[field];
@@ -221,6 +204,7 @@ define([
                 };
 
                 var displayName = parametricModel.get('displayName');
+
                 if (displayName) {
                     attributes.displayName = displayName;
                 }
@@ -233,7 +217,7 @@ define([
                 .map(function (data, field) {
                     return data.range ? null : new DisplayModel({id: field, numeric: data.numeric, dataType: 'parametric'}, {
                         initialValues: attributesForUnknownCountValues(data.values)
-                    })
+                    });
                 })
                 .compact()
                 .value()
@@ -252,7 +236,7 @@ define([
 
                         if (searchMatches(model.get('displayName'), searchText)) {
                             // Keep all value models
-                            valueModelAttributes = model.fieldValues.models
+                            valueModelAttributes = model.fieldValues.models;
                         } else {
                             // Filter value models
                             valueModelAttributes = _.filter(model.fieldValues.models, function(model) {
