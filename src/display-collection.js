@@ -134,7 +134,13 @@ define([
                         fieldModel.fieldValues.add(valueModelAttributes);
                     }
                 } else {
-                    this.add(new DisplayModel({id: field}, {initialValues: [valueModelAttributes]}));
+                    var attributes = {
+                        id: field,
+                        numeric: false,
+                        dataType: 'parametric'
+                    };
+
+                    this.add(new DisplayModel(attributes, {initialValues: [valueModelAttributes]}));
                 }
             }
         },
