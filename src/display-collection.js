@@ -137,6 +137,7 @@ define([
                     var attributes = {
                         id: field,
                         numeric: false,
+                        totalValues: 0,
                         dataType: 'parametric'
                     };
 
@@ -190,14 +191,14 @@ define([
                 var selectedValues = selectedField ? selectedField.values : [];
 
                 var initialValues = _.map(parametricModel.get('values'), function(item) {
-                        var value = item.value;
-                        var oldSelectedValuesLength = selectedValues.length;
-                        selectedValues = _.without(selectedValues, value);
-                        // If the length has changed after calling _.without, the value must have been selected
-                        var isSelected = oldSelectedValuesLength !== selectedValues.length;
-                        return {id: item.value, count: item.count, selected: isSelected, displayName: item.displayName};
-                    })
-                    // Handle any selected values which are not in the parametric collection
+                    var value = item.value;
+                    var oldSelectedValuesLength = selectedValues.length;
+                    selectedValues = _.without(selectedValues, value);
+                    // If the length has changed after calling _.without, the value must have been selected
+                    var isSelected = oldSelectedValuesLength !== selectedValues.length;
+                    return {id: item.value, count: item.count, selected: isSelected, displayName: item.displayName};
+                })
+                // Handle any selected values which are not in the parametric collection
                     .concat(attributesForUnknownCountValues(selectedValues));
 
                 // Delete the selected field from the map so we don't consider it twice
@@ -206,6 +207,7 @@ define([
                 var attributes = {
                     id: parametricModel.get('id'),
                     numeric: parametricModel.get('numeric'),
+                    totalValues: parametricModel.get('totalValues'),
                     dataType: 'parametric'
                 };
 
@@ -221,9 +223,9 @@ define([
             // Handle any selected fields which were not present in the parametric collection
             newModels = newModels.concat(_.chain(selectedFields)
                 .map(function (data, field) {
-                    return data.range ? null : new DisplayModel({id: field, numeric: data.numeric, dataType: 'parametric'}, {
-                        initialValues: attributesForUnknownCountValues(data.values)
-                    });
+                    return data.range ? null : new DisplayModel({id: field, numeric: data.numeric, totalValues: null, dataType: 'parametric'}, {
+                            initialValues: attributesForUnknownCountValues(data.values)
+                        });
                 })
                 .compact()
                 .value()
@@ -251,7 +253,7 @@ define([
                             });
                         }
 
-                        return new DisplayModel({id: model.id, dataType: 'parametric'}, {initialValues: valueModelAttributes});
+                        return new DisplayModel({id: model.id, dataType: 'parametric', totalValues: model.get('totalValues')}, {initialValues: valueModelAttributes});
                     }, this)
                     .filter(function(model) {
                         return model.fieldValues.length > 0;
