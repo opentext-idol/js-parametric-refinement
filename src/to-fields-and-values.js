@@ -18,11 +18,14 @@ define([
             .mapObject(function(selectedModels) {
                 // pick all the values from the resulting array
                 return selectedModels[0].range ? {
+                    displayName: selectedModels[0].displayName,
                     numeric: selectedModels[0].numeric,
                     range: selectedModels[0].range
                 } : {
+                    displayName: selectedModels[0].displayName,
                     numeric: selectedModels[0].numeric,
-                    values: _.pluck(selectedModels, 'value')
+                    values: _.pluck(selectedModels, 'value'),
+                    displayValues: _.pluck(selectedModels, 'displayValue')
                 }
             })
             .value();

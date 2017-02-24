@@ -8,9 +8,8 @@
  */
 define([
     'backbone',
-    'underscore',
-    './prettify-field-name'
-], function(Backbone, _, prettifyFieldName) {
+    'underscore'
+], function(Backbone, _) {
 
     // When we don't know the count for a value (because it is in the selected values collection but not the parametric
     // collection) use null instead
@@ -53,6 +52,7 @@ define([
      * @property {string} id The field name
      * @property {string} displayName A "prettified" friendly name for the field
      * @property {boolean} selected Whether the user has selected the value
+     * @property {boolean} selected Whether the user has selected the value
      */
     /**
      * The model for the [DisplayCollection]{@link module:display-collection}, representing a parametric field. The values
@@ -65,7 +65,6 @@ define([
     var DisplayModel = Backbone.Model.extend({
         initialize: function(attributes, options) {
             this.fieldValues = new ValuesCollection(options.initialValues);
-            this.set('displayName', attributes.displayName || prettifyFieldName(this.id));
         }
     });
 
@@ -101,19 +100,13 @@ define([
         initialize: function(models, options) {
             this.parametricCollection = options.parametricCollection;
             this.selectedParametricValues = options.selectedParametricValues;
-            this.filterModel = options.filterModel;
 
-            if(this.filterModel) {
-                this.createModels = _.compose(this.filterModels, this.getResolvedDisplayModels);
-            } else {
-                this.createModels = this.getResolvedDisplayModels;
-            }
+            this.createModels = this.getResolvedDisplayModels;
 
             this.listenTo(this.selectedParametricValues, 'add', this.onSelectedValueAdd);
             this.listenTo(this.selectedParametricValues, 'remove', this.onSelectedValueRemove);
             this.listenTo(this.selectedParametricValues, 'reset', this.onReset);
             this.listenTo(this.parametricCollection, 'reset', this.onReset);
-            this.listenTo(this.filterModel, 'change:text', this.onReset);
 
             Array.prototype.push.apply(models, this.createModels());
         },
@@ -122,7 +115,7 @@ define([
             var field = selectedModel.get('field');
             var value = selectedModel.get('value');
             if (value) {
-                var valueModelAttributes = {id: value, count: UNKNOWN_COUNT, selected: true};
+                var valueModelAttributes = {id: value, displayValue: selectedModel.get('displayValue'), count: UNKNOWN_COUNT, selected: true};
                 var fieldModel = this.get(field);
 
                 if (fieldModel) {
@@ -136,6 +129,7 @@ define([
                 } else {
                     var attributes = {
                         id: field,
+                        displayName: selectedModel.get('displayName'),
                         numeric: false,
                         totalValues: 0,
                         dataType: 'parametric'
@@ -196,7 +190,7 @@ define([
                     selectedValues = _.without(selectedValues, value);
                     // If the length has changed after calling _.without, the value must have been selected
                     var isSelected = oldSelectedValuesLength !== selectedValues.length;
-                    return {id: item.value, count: item.count, selected: isSelected, displayName: item.displayName};
+                    return {id: item.value, displayName: item.displayName, count: item.count, selected: isSelected};
                 })
                 // Handle any selected values which are not in the parametric collection
                     .concat(attributesForUnknownCountValues(selectedValues));
@@ -206,6 +200,7 @@ define([
 
                 var attributes = {
                     id: parametricModel.get('id'),
+                    displayName: parametricModel.get('displayName'),
                     numeric: parametricModel.get('numeric'),
                     totalValues: parametricModel.get('totalValues'),
                     dataType: 'parametric'
@@ -223,7 +218,7 @@ define([
             // Handle any selected fields which were not present in the parametric collection
             newModels = newModels.concat(_.chain(selectedFields)
                 .map(function (data, field) {
-                    return data.range ? null : new DisplayModel({id: field, numeric: data.numeric, totalValues: null, dataType: 'parametric'}, {
+                    return data.range ? null : new DisplayModel({id: field, displayName: data.displayName, numeric: data.numeric, totalValues: null, dataType: 'parametric'}, {
                             initialValues: attributesForUnknownCountValues(data.values)
                         });
                 })
@@ -232,36 +227,6 @@ define([
             );
 
             return newModels;
-        },
-
-        filterModels: function(models) {
-            var searchText = this.filterModel.get('text');
-
-            if (searchText) {
-                return _.chain(models)
-                    .map(function(model) {
-                        var valueModelAttributes;
-
-                        if (searchMatches(model.get('displayName'), searchText)) {
-                            // Keep all value models
-                            valueModelAttributes = model.fieldValues.models;
-                        } else {
-                            // Filter value models
-                            valueModelAttributes = _.filter(model.fieldValues.models, function(model) {
-                                var displayName = model.get('displayName');
-                                return searchMatches(displayName || model.id, searchText);
-                            });
-                        }
-
-                        return new DisplayModel({id: model.id, dataType: 'parametric', totalValues: model.get('totalValues')}, {initialValues: valueModelAttributes});
-                    }, this)
-                    .filter(function(model) {
-                        return model.fieldValues.length > 0;
-                    })
-                    .value();
-            } else {
-                return models;
-            }
         }
     });
 
