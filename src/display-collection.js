@@ -22,11 +22,6 @@ define([
         });
     }
 
-    // True if the text is matched by the search
-    function searchMatches(text, search) {
-        return text.toLowerCase().indexOf(search.toLowerCase()) > -1;
-    }
-
     /**
      * The attributes set on each model in a [ValuesCollection]{@link module:display-collection~ValuesCollection}.
      * @typedef module:display-collection~ValuesCollection.ValueModelAttributes
