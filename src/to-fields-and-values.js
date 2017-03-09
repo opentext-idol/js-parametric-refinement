@@ -19,11 +19,11 @@ define([
                 // pick all the values from the resulting array
                 return selectedModels[0].range ? {
                     displayName: selectedModels[0].displayName,
-                    numeric: selectedModels[0].numeric,
+                    type: selectedModels[0].type,
                     range: selectedModels[0].range
                 } : {
                     displayName: selectedModels[0].displayName,
-                    numeric: selectedModels[0].numeric,
+                    type: selectedModels[0].type,
                     values: _.pluck(selectedModels, 'value'),
                     displayValues: _.pluck(selectedModels, 'displayValue')
                 }

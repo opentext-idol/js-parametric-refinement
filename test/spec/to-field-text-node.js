@@ -15,7 +15,7 @@ define([
                 {field: 'NAME', value: 'bob'},
                 {field: 'FRIEND', value: 'penny'},
                 {field: 'AGE', value: '25'},
-                {field: 'YEAR', range: [1307, 1327], numeric: true},
+                {field: 'YEAR', range: [1307, 1327], type: 'Numeric'},
                 {field: 'DATE', range: [123456789, 123456790]}
             ];
         });
