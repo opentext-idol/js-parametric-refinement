@@ -13,24 +13,25 @@ define([
     describe('Display collection initialised with three selected parametric values and two fields from the server', function() {
         beforeEach(function() {
             this.selectedParametricValues = new SelectedParametricValuesCollection([
-                {field: '/DOCUMENT/NAME', value: 'penny'},
-                {field: '/DOCUMENT/NAME', value: 'jenny'},
-                {field: '/DOCUMENT/VEHICLE', value: 'van'}
+                {field: '/DOCUMENT/NAME', displayName: 'Name', value: 'penny', displayValue: 'Penny', type: 'Parametric'},
+                {field: '/DOCUMENT/NAME', displayName: 'Name', value: 'jenny', displayValue: 'Jenny', type: 'Parametric'},
+                {field: '/DOCUMENT/VEHICLE', displayName: 'Vehicle', value: 'van', displayValue: 'Van', type: 'Parametric'}
             ]);
 
             this.parametricCollection = new Backbone.Collection([{
                 id: '/DOCUMENT/NAME',
-                name: 'NAME',
+                displayName: 'Name',
+                type: 'Parametric',
                 values: [
-                    {value: 'penny', count: 3},
-                    {value: 'bobby', count: 2}
+                    {value: 'penny', displayValue: 'Penny', count: 3},
+                    {value: 'bobby', displayValue: 'Bobby', count: 2}
                 ]
             }, {
                 id: '/DOCUMENT/AGE',
-                name: 'AGE',
-                displayName: 'JUST A NUMBER',
+                displayName: 'Age',
+                type: 'Parametric',
                 values: [
-                    {displayName: 'RUDE TO ASK', value: '4', count: 2}
+                    {value: '4', displayValue: 'RUDE TO ASK', count: 2}
                 ]
             }], {
                 model: Backbone.Model.extend({
@@ -38,12 +39,9 @@ define([
                 })
             });
 
-            this.filterModel = new Backbone.Model();
-
             this.collection = new ParametricDisplayCollection([], {
                 parametricCollection: this.parametricCollection,
-                selectedParametricValues: this.selectedParametricValues,
-                filterModel: this.filterModel
+                selectedParametricValues: this.selectedParametricValues
             });
         });
 
@@ -101,15 +99,15 @@ define([
         it('sets the displayName attribute on all of the models', function() {
             _.each({
                 '/DOCUMENT/NAME': 'Name',
-                '/DOCUMENT/AGE': 'JUST A NUMBER',
+                '/DOCUMENT/AGE': 'Age',
                 '/DOCUMENT/VEHICLE': 'Vehicle'
             }, function(displayName, field) {
                 expect(this.collection.get(field).get('displayName')).toBe(displayName);
             }, this);
         });
 
-        it('sets the displayName attribute on all of the values', function() {
-            expect(this.collection.get('/DOCUMENT/AGE').fieldValues.get('4').get('displayName')).toBe('RUDE TO ASK');
+        it('sets the displayValue attribute on all of the values', function() {
+            expect(this.collection.get('/DOCUMENT/AGE').fieldValues.get('4').get('displayValue')).toBe('RUDE TO ASK');
         });
 
         it('sets the field value model selected attribute to false if the value is not selected', function() {
@@ -123,19 +121,9 @@ define([
             expect(this.collection.get('/DOCUMENT/VEHICLE').fieldValues.get('van').get('selected')).toBe(true);
         });
 
-        it('prettifies the displayName attributes', function() {
-            this.selectedParametricValues.add([
-                {field: 'jedi_knight', value: 'Yoda'},
-                {field: 'date_of_birth', value: '06/07/08'}
-            ]);
-
-            expect(this.collection.get('jedi_knight').get('displayName')).toBe('Jedi Knight');
-            expect(this.collection.get('date_of_birth').get('displayName')).toBe('Date Of Birth');
-        });
-
         describe('after a field value from the parametric collection is selected', function() {
             beforeEach(function() {
-                this.selectedParametricValues.add({field: '/DOCUMENT/AGE', value: '4'});
+                this.selectedParametricValues.add({field: '/DOCUMENT/AGE', displayName: 'Age', value: '4', displayValue: 'RUDE TO ASK', type: 'Parametric'});
             });
 
             it('does not change length', function() {
@@ -429,22 +417,6 @@ define([
                 expect(this.collection.get('/DOCUMENT/MILES').fieldValues.get('50000').get('selected')).toBe(false);
             });
         });
-
-        it('displays only the field values of a field which incompletely matches the filter when it is applied', function() {
-            this.filterModel.set('text', 'nam');
-
-            expect(this.collection.get('/DOCUMENT/NAME')).toBeDefined();
-            expect(this.collection.get('/DOCUMENT/VEHICLE')).not.toBeDefined();
-        });
-
-        it('displays a filtered category when the filter incompletely matches the value of one of the values of a field', function() {
-            this.filterModel.set('text', 'jen');
-
-            expect(this.collection.get('/DOCUMENT/NAME')).toBeDefined();
-            expect(this.collection.get('/DOCUMENT/NAME').fieldValues.length).toBe(1);
-            expect(this.collection.get('/DOCUMENT/NAME').fieldValues.models[0].id).toBe('jenny');
-            expect(this.collection.get('/DOCUMENT/VEHICLE')).not.toBeDefined();
-        })
     });
 
 });

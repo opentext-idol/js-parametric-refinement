@@ -21,14 +21,14 @@ define([
         var fieldNodes = [];
         _.each(fieldsAndValues, function (data, field) {
             if (data.values && data.values.length > 0) {
-                var operator = data.numeric ? 'EQUAL' : 'MATCH';
+                var operator = data.type === 'Numeric' ? 'EQUAL' : 'MATCH';
                 fieldNodes.push(new parser.ExpressionNode(operator, [field], _.map(data.values, escapeFieldTextValue)));
             }
         });
         
         parametricValuesArray.forEach(function (data) {
             if (data.range) {
-                if (data.numeric) {
+                if (data.type === 'Numeric') {
                     fieldNodes.push(new parser.ExpressionNode('NRANGE', [data.field], data.range));
                 } else {
                     fieldNodes.push(new parser.ExpressionNode('RANGE', [data.field], [data.range[0] + 'e', data.range[1] + 'e']));

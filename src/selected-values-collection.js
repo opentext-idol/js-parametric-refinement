@@ -18,14 +18,14 @@ define([
     /**
      * @typedef module:selected-values-collection~SelectedValuesCollection.FieldData
      * @property {String[]} values The values of the field
-     * @property {boolean} numeric True if the parametric field is numeric; false otherwise
+     * @property {String} type Parametric/Numeric/NumericDate
      */
     /**
      * The attributes on each model in a [SelectedValuesCollection]{@link module:selected-values-collection}.
      * @typedef module:selected-values-collection~SelectedValuesCollection.SelectedValueAttributes
      * @property {string} field The parametric field name
      * @property {string} value The parametric field value
-     * @property {boolean} numeric True if the parametric field is numeric; false otherwise
+     * @property {String} type Parametric/Numeric/NumericDate
      */
     /**
      * Collection designed to be the only mutable store for the selected parametric values in an application. Every model
