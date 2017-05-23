@@ -1,21 +1,40 @@
 /*
- * Copyright 2015 Hewlett-Packard Development Company, L.P.
+ * Copyright 2015-2017 Hewlett Packard Enterprise Development Company, L.P.
  * Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License.
  */
 
 define([
-    'backbone',
     'underscore',
+    'backbone',
     'src/display-collection',
     'src/selected-values-collection'
-], function(Backbone, _, ParametricDisplayCollection, SelectedParametricValuesCollection) {
+], function(_, Backbone, ParametricDisplayCollection, SelectedParametricValuesCollection) {
+    'use strict';
 
     describe('Display collection initialised with three selected parametric values and two fields from the server', function() {
         beforeEach(function() {
             this.selectedParametricValues = new SelectedParametricValuesCollection([
-                {field: '/DOCUMENT/NAME', displayName: 'Name', value: 'penny', displayValue: 'Penny', type: 'Parametric'},
-                {field: '/DOCUMENT/NAME', displayName: 'Name', value: 'jenny', displayValue: 'Jenny', type: 'Parametric'},
-                {field: '/DOCUMENT/VEHICLE', displayName: 'Vehicle', value: 'van', displayValue: 'Van', type: 'Parametric'}
+                {
+                    field: '/DOCUMENT/NAME',
+                    displayName: 'Name',
+                    value: 'penny',
+                    displayValue: 'Penny',
+                    type: 'Parametric'
+                },
+                {
+                    field: '/DOCUMENT/NAME',
+                    displayName: 'Name',
+                    value: 'jenny',
+                    displayValue: 'Jenny',
+                    type: 'Parametric'
+                },
+                {
+                    field: '/DOCUMENT/VEHICLE',
+                    displayName: 'Vehicle',
+                    value: 'van',
+                    displayValue: 'Van',
+                    type: 'Parametric'
+                }
             ]);
 
             this.parametricCollection = new Backbone.Collection([{
@@ -123,7 +142,13 @@ define([
 
         describe('after a field value from the parametric collection is selected', function() {
             beforeEach(function() {
-                this.selectedParametricValues.add({field: '/DOCUMENT/AGE', displayName: 'Age', value: '4', displayValue: 'RUDE TO ASK', type: 'Parametric'});
+                this.selectedParametricValues.add({
+                    field: '/DOCUMENT/AGE',
+                    displayName: 'Age',
+                    value: '4',
+                    displayValue: 'RUDE TO ASK',
+                    type: 'Parametric'
+                });
             });
 
             it('does not change length', function() {
@@ -418,5 +443,4 @@ define([
             });
         });
     });
-
 });

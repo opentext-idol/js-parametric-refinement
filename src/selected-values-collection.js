@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hewlett-Packard Development Company, L.P.
+ * Copyright 2015-2017 Hewlett Packard Enterprise Development Company, L.P.
  * Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License.
  */
 
@@ -9,11 +9,11 @@
  */
 define([
     'backbone',
-    'underscore',
     'fieldtext/js/field-text-parser',
     './to-fields-and-values',
     './to-field-text-node'
-], function(Backbone, _, parser, toFieldsAndValues, toFieldTextNode) {
+], function(Backbone, parser, toFieldsAndValues, toFieldTextNode) {
+    'use strict';
 
     /**
      * @typedef module:selected-values-collection~SelectedValuesCollection.FieldData
@@ -59,5 +59,4 @@ define([
             return toFieldTextNode(this.toJSON())
         }
     });
-
 });
