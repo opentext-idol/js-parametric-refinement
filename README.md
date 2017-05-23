@@ -1,8 +1,8 @@
-# HP Autonomy JS Parametric Refinement
+# HPE Parametric Refinement
 
 [![Build Status](https://travis-ci.org/hpe-idol/js-parametric-refinement.svg?branch=master)](https://travis-ci.org/hpe-idol/js-parametric-refinement)
 
-Backbone components for HPE Haven parametric refinement.
+Parametric refinement Backbone components
 
 Documentation can be found [here](http://hpe-idol.github.io/js-parametric-refinement).
 
@@ -30,6 +30,6 @@ Available grunt tasks:
 * grunt watch-build-test : Watches for changes and regenerates the spec runner
 
 ## License
-Copyright 2015-2016 Hewlett Packard Enterprise Development LP
+Copyright 2015-2017 Hewlett Packard Enterprise Development LP
 
 Licensed under the MIT License (the "License"); you may not use this project except in compliance with the License.
