@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>HP Autonomy JS Parametric Refinement Source: display-collection.js</title>
+	<title>HPE JS Parametric Refinement Source: display-collection.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -18,7 +18,7 @@
 <div class="container-fluid">
 	<div class="navbar navbar-fixed-top ">
 		<div class="navbar-inner">
-			<a class="brand" href="index.html">HP Autonomy JS Parametric Refinement</a>
+			<a class="brand" href="index.html">HPE JS Parametric Refinement</a>
 			<ul class="nav">
 				
 				<li class="dropdown">
@@ -84,7 +84,7 @@
 	<article>
 		<pre
 			class="sunlight-highlight-javascript linenums">/*
- * Copyright 2015 Hewlett-Packard Development Company, L.P.
+ * Copyright 2015-2017 Hewlett Packard Enterprise Development Company, L.P.
  * Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License.
  */
 
@@ -92,9 +92,10 @@
  * @module display-collection
  */
 define([
-    'backbone',
-    'underscore'
-], function(Backbone, _) {
+    'underscore',
+    'backbone'
+], function(_, Backbone) {
+    'use strict';
 
     // When we don't know the count for a value (because it is in the selected values collection but not the parametric
     // collection) use null instead
@@ -194,14 +195,19 @@ define([
         onSelectedValueAdd: function(selectedModel) {
             var field = selectedModel.get('field');
             var value = selectedModel.get('value');
-            if (value) {
-                var valueModelAttributes = {id: value, displayValue: selectedModel.get('displayValue'), count: UNKNOWN_COUNT, selected: true};
+            if(value) {
+                var valueModelAttributes = {
+                    id: value,
+                    displayValue: selectedModel.get('displayValue'),
+                    count: UNKNOWN_COUNT,
+                    selected: true
+                };
                 var fieldModel = this.get(field);
 
-                if (fieldModel) {
+                if(fieldModel) {
                     var valueModel = fieldModel.fieldValues.get(value);
 
-                    if (valueModel) {
+                    if(valueModel) {
                         valueModel.set('selected', true);
                     } else {
                         fieldModel.fieldValues.add(valueModelAttributes);
@@ -222,20 +228,20 @@ define([
         onSelectedValueRemove: function(selectedModel) {
             var field = selectedModel.get('field');
             var value = selectedModel.get('value');
-            if (value) {
+            if(value) {
                 var parametricModel = this.parametricCollection.get(field);
 
-                var inParametricCollection = parametricModel &amp;&amp; _.any(parametricModel.get('values'), function (item) {
+                var inParametricCollection = parametricModel &amp;&amp; _.any(parametricModel.get('values'), function(item) {
                         return value === item.value;
                     });
 
                 var model = this.get(field);
 
-                if (inParametricCollection) {
+                if(inParametricCollection) {
                     model.fieldValues.get(value).set('selected', false);
                 } else {
                     // Only remove the value model if the value is not in the parametric collection
-                    if (model.fieldValues.length &lt;= 1) {
+                    if(model.fieldValues.length &lt;= 1) {
                         this.remove(model);
                     } else {
                         model.fieldValues.remove(value);
@@ -289,10 +295,20 @@ define([
 
             // Handle any selected fields which were not present in the parametric collection
             newModels = newModels.concat(_.chain(selectedFields)
-                .map(function (data, field) {
-                    return data.range ? null : new DisplayModel({id: field, displayName: data.displayName, type: data.type, totalValues: null}, {
-                            initialValues: attributesForUnknownCountValues(data.values)
-                        });
+                .map(function(data, field) {
+                    return data.range
+                        ? null
+                        : new DisplayModel(
+                            {
+                                id: field,
+                                displayName: data.displayName,
+                                type: data.type,
+                                totalValues: null
+                            },
+                            {
+                                initialValues: attributesForUnknownCountValues(data.values)
+                            }
+                        );
                 })
                 .compact()
                 .value()
@@ -301,7 +317,6 @@ define([
             return newModels;
         }
     });
-
 });
 </pre>
 	</article>
@@ -318,13 +333,13 @@ define([
 					
 					
 		<span class="copyright">
-		Copyright 2015 Hewlett-Packard Development Company, L.P. Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License.
+		Copyright 2015-2017 Hewlett Packard Enterprise Development Company, L.P. Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License.
 		</span>
 					<br />
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
-		on Tue May 16th 11:34 2017 using the <a
+		on Thu May 25th 16:25 2017 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
