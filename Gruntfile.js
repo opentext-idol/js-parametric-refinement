@@ -22,13 +22,13 @@ const requireCallback = function() {
         var oldLoad = requirejs.load;
 
         requirejs.load = function(context, moduleName, url) {
-            if (url.substring(0, 1) === '/') {
+            if(url.substring(0, 1) === '/') {
                 url = url.substring(1);
-            } else if (url.substring(0, 2) === './') {
+            } else if(url.substring(0, 2) === './') {
                 url = url.substring(2);
             }
 
-            if (instrumented.indexOf(url) > -1) {
+            if(instrumented.indexOf(url) > -1) {
                 url = './.grunt/grunt-contrib-jasmine/' + url;
             }
 
@@ -121,6 +121,7 @@ module.exports = function(grunt) {
                 freeze: true,
                 jquery: true,
                 latedef: true,
+                laxbreak: true,
                 newcap: true,
                 noarg: true,
                 noempty: true,

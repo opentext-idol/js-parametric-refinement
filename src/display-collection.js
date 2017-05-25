@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hewlett-Packard Development Company, L.P.
+ * Copyright 2015-2017 Hewlett Packard Enterprise Development Company, L.P.
  * Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License.
  */
 
@@ -7,9 +7,10 @@
  * @module display-collection
  */
 define([
-    'backbone',
-    'underscore'
-], function(Backbone, _) {
+    'underscore',
+    'backbone'
+], function(_, Backbone) {
+    'use strict';
 
     // When we don't know the count for a value (because it is in the selected values collection but not the parametric
     // collection) use null instead
@@ -109,14 +110,19 @@ define([
         onSelectedValueAdd: function(selectedModel) {
             var field = selectedModel.get('field');
             var value = selectedModel.get('value');
-            if (value) {
-                var valueModelAttributes = {id: value, displayValue: selectedModel.get('displayValue'), count: UNKNOWN_COUNT, selected: true};
+            if(value) {
+                var valueModelAttributes = {
+                    id: value,
+                    displayValue: selectedModel.get('displayValue'),
+                    count: UNKNOWN_COUNT,
+                    selected: true
+                };
                 var fieldModel = this.get(field);
 
-                if (fieldModel) {
+                if(fieldModel) {
                     var valueModel = fieldModel.fieldValues.get(value);
 
-                    if (valueModel) {
+                    if(valueModel) {
                         valueModel.set('selected', true);
                     } else {
                         fieldModel.fieldValues.add(valueModelAttributes);
@@ -137,20 +143,20 @@ define([
         onSelectedValueRemove: function(selectedModel) {
             var field = selectedModel.get('field');
             var value = selectedModel.get('value');
-            if (value) {
+            if(value) {
                 var parametricModel = this.parametricCollection.get(field);
 
-                var inParametricCollection = parametricModel && _.any(parametricModel.get('values'), function (item) {
+                var inParametricCollection = parametricModel && _.any(parametricModel.get('values'), function(item) {
                         return value === item.value;
                     });
 
                 var model = this.get(field);
 
-                if (inParametricCollection) {
+                if(inParametricCollection) {
                     model.fieldValues.get(value).set('selected', false);
                 } else {
                     // Only remove the value model if the value is not in the parametric collection
-                    if (model.fieldValues.length <= 1) {
+                    if(model.fieldValues.length <= 1) {
                         this.remove(model);
                     } else {
                         model.fieldValues.remove(value);
@@ -204,10 +210,20 @@ define([
 
             // Handle any selected fields which were not present in the parametric collection
             newModels = newModels.concat(_.chain(selectedFields)
-                .map(function (data, field) {
-                    return data.range ? null : new DisplayModel({id: field, displayName: data.displayName, type: data.type, totalValues: null}, {
-                            initialValues: attributesForUnknownCountValues(data.values)
-                        });
+                .map(function(data, field) {
+                    return data.range
+                        ? null
+                        : new DisplayModel(
+                            {
+                                id: field,
+                                displayName: data.displayName,
+                                type: data.type,
+                                totalValues: null
+                            },
+                            {
+                                initialValues: attributesForUnknownCountValues(data.values)
+                            }
+                        );
                 })
                 .compact()
                 .value()
@@ -216,5 +232,4 @@ define([
             return newModels;
         }
     });
-
 });
