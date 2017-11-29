@@ -21,7 +21,7 @@ define([
         });
 
         it('returns a field text node representing the collection', function() {
-            this.parametricValues.push({field: 'DATE', range: [123456789, 123456790]});
+            this.parametricValues.push({field: 'DATE', range: [123456789000, 123456790000]});
 
             var fieldText = toFieldTextNode(this.parametricValues).toString();
             expect(fieldText).toContain('MATCH{25}:AGE');
@@ -34,8 +34,8 @@ define([
             this.parametricValues.push({
                 field: 'DATE',
                 range: [
-                    -1971 * 365 * 24 * 3600,
-                    -1941 * 365 * 24 * 3600
+                    -1971 * 365 * 24 * 3600 * 1000,
+                    -1941 * 365 * 24 * 3600 * 1000
                 ]
             });
 
