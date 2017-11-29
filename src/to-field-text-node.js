@@ -17,9 +17,9 @@ define([
         }, value);
     }
 
-    function epochToIsoDate(epochArray) {
-        return _.map(epochArray, function(epoch) {
-            return moment(epoch * 1000).milliseconds(0).utc().format();
+    function epochMillisToIsoDate(epochMillisArray) {
+        return _.map(epochMillisArray, function(epochMillis) {
+            return moment(epochMillis).milliseconds(0).utc().format();
         });
     }
 
@@ -45,7 +45,7 @@ define([
                 if(data.type === 'Numeric') {
                     fieldNodes.push(new parser.ExpressionNode('NRANGE', [data.field], data.range));
                 } else {
-                    fieldNodes.push(new parser.ExpressionNode('RANGE', [data.field], epochToIsoDate(data.range)));
+                    fieldNodes.push(new parser.ExpressionNode('RANGE', [data.field], epochMillisToIsoDate(data.range)));
                 }
             }
         });
