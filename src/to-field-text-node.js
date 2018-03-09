@@ -12,9 +12,7 @@ define([
     'use strict';
 
     function escapeFieldTextValue(value) {
-        return _.reduce([',', '}', '{'], function(token) {
-            return value.replace(token, encodeURIComponent(token))
-        }, value);
+        return encodeURIComponent(value);
     }
 
     function epochMillisToIsoDate(epochMillisArray) {
