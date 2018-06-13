@@ -1,10 +1,10 @@
 # HPE Parametric Refinement
 
-[![Build Status](https://travis-ci.org/hpe-idol/js-parametric-refinement.svg?branch=master)](https://travis-ci.org/hpe-idol/js-parametric-refinement)
+[![Build Status](https://travis-ci.org/microfocus-idol/js-parametric-refinement.svg?branch=master)](https://travis-ci.org/microfocus-idol/js-parametric-refinement)
 
 Parametric refinement Backbone components
 
-Documentation can be found [here](http://hpe-idol.github.io/js-parametric-refinement).
+Documentation can be found [here](http://microfocus-idol.github.io/js-parametric-refinement).
 
 ## Usage
     bower install hp-autonomy-js-parametric-refinement
