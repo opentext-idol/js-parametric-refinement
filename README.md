@@ -1,4 +1,4 @@
-# HPE Parametric Refinement
+# Micro Focus Parametric Refinement
 
 [![Build Status](https://travis-ci.org/microfocus-idol/js-parametric-refinement.svg?branch=master)](https://travis-ci.org/microfocus-idol/js-parametric-refinement)
 
@@ -30,6 +30,7 @@ Available grunt tasks:
 * grunt watch-build-test : Watches for changes and regenerates the spec runner
 
 ## License
-Copyright 2015-2017 Hewlett Packard Enterprise Development LP
+
+(c) Copyright 2015-2017 Micro Focus or one of its affiliates.
 
 Licensed under the MIT License (the "License"); you may not use this project except in compliance with the License.
