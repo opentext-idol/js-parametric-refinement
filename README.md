@@ -1,4 +1,4 @@
-# Micro Focus Parametric Refinement
+# OpenText Parametric Refinement
 
 [![Build Status](https://travis-ci.org/microfocus-idol/js-parametric-refinement.svg?branch=master)](https://travis-ci.org/microfocus-idol/js-parametric-refinement)
 
@@ -31,6 +31,6 @@ Available grunt tasks:
 
 ## License
 
-(c) Copyright 2015-2017 Micro Focus or one of its affiliates.
+(c) Copyright 2015-2017 OpenText or one of its affiliates.
 
 Licensed under the MIT License (the "License"); you may not use this project except in compliance with the License.

@@ -159,18 +159,6 @@ module.exports = function(grunt) {
                     base: documentationBase,
                     message: gitHubPagesMessage
                 }
-            },
-            travis: {
-                src: gitHubPagesSource,
-                options: {
-                    base: documentationBase,
-                    message: gitHubPagesMessage,
-                    repo: 'https://' + process.env.GH_TOKEN + '@github.com/' + process.env.TRAVIS_REPO_SLUG,
-                    user: {
-                        name: 'Travis CI Server',
-                        email: 'matthew.gordon2@hpe.com'
-                    }
-                }
             }
         },
         watch: {
@@ -209,5 +197,4 @@ module.exports = function(grunt) {
 
     grunt.registerTask('ci', ['lint', 'test', 'coverage']);
     grunt.registerTask('push-doc', ['doc', 'gh-pages:default']);
-    grunt.registerTask('push-doc-travis', ['doc', 'gh-pages:travis']);
 };
