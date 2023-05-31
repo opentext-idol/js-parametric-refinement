@@ -1,10 +1,8 @@
 # OpenText Parametric Refinement
 
-[![Build Status](https://travis-ci.org/microfocus-idol/js-parametric-refinement.svg?branch=master)](https://travis-ci.org/microfocus-idol/js-parametric-refinement)
-
 Parametric refinement Backbone components
 
-Documentation can be found [here](http://microfocus-idol.github.io/js-parametric-refinement).
+Documentation can be found [here](http://opentext-idol.github.io/js-parametric-refinement).
 
 ## Usage
     bower install hp-autonomy-js-parametric-refinement
@@ -31,6 +29,6 @@ Available grunt tasks:
 
 ## License
 
-(c) Copyright 2015-2017 OpenText or one of its affiliates.
+Copyright 2015-2017 OpenText or one of its affiliates.
 
 Licensed under the MIT License (the "License"); you may not use this project except in compliance with the License.
