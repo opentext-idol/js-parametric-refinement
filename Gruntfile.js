@@ -56,6 +56,7 @@ module.exports = function(grunt) {
         },
         jasmine: {
             options: {
+                version: '3.8.0', // https://github.com/gruntjs/grunt-contrib-jasmine/issues/339
                 specs: specPath,
                 keepRunner: true
             },
@@ -152,15 +153,6 @@ module.exports = function(grunt) {
                 }
             }
         },
-        'gh-pages': {
-            'default': {
-                src: gitHubPagesSource,
-                options: {
-                    base: documentationBase,
-                    message: gitHubPagesMessage
-                }
-            }
-        },
         watch: {
             buildTest: {
                 files: [sourcePath, 'test/**/*.js'],
@@ -182,7 +174,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-gh-pages');
     grunt.loadNpmTasks('grunt-jsdoc');
 
     grunt.registerTask('coverage', ['jasmine:coverage']);
@@ -196,5 +187,4 @@ module.exports = function(grunt) {
     grunt.registerTask('watch-build-test', ['jasmine:test:build', 'watch:buildTest']);
 
     grunt.registerTask('ci', ['lint', 'test', 'coverage']);
-    grunt.registerTask('push-doc', ['doc', 'gh-pages:default']);
 };
