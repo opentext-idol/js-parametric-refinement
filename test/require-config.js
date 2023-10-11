@@ -15,13 +15,13 @@
 require.config({
     baseUrl: '.',
     paths: {
-        backbone: 'bower_components/backbone/backbone',
-        fieldtext: 'bower_components/hp-autonomy-fieldtext-js/src',
-        jquery: 'bower_components/jquery/jquery',
-        moment: 'bower_components/moment/moment',
-        peg: 'bower_components/pegjs/peg-0.10.0',
-        text: 'bower_components/requirejs-text/text',
-        underscore: 'bower_components/underscore/underscore'
+        backbone: 'node_modules/backbone/backbone',
+        fieldtext: 'node_modules/hp-autonomy-fieldtext-js/src',
+        jquery: 'node_modules/jquery/dist/jquery',
+        moment: 'node_modules/moment/moment',
+        peg: 'node_modules/pegjs/peg-0.10.0',
+        text: 'node_modules/requirejs-text/text',
+        underscore: 'node_modules/underscore/underscore'
     },
     shim: {
         peg: {
