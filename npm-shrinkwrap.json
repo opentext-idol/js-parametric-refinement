@@ -1,18 +1,18 @@
 {
   "name": "hp-autonomy-js-parametric-refinement",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "hp-autonomy-js-parametric-refinement",
-      "version": "2.1.0",
+      "version": "2.2.0",
       "dependencies": {
         "backbone": "1.2.3",
-        "hp-autonomy-fieldtext-js": "opentext-idol/fieldtext-js#1.7.0",
+        "hp-autonomy-fieldtext-js": "github:opentext-idol/fieldtext-js#1.8.0",
         "moment": "2.29.4",
         "pegjs": "opentext-idol/pegjs#0.10.0",
-        "requirejs": "2.3.3",
+        "requirejs": "2.3.7",
         "requirejs-text": "2.0.15",
         "underscore": "1.13.6"
       },
@@ -2510,10 +2510,11 @@
     },
     "node_modules/hp-autonomy-fieldtext-js": {
       "name": "hp-autonomy-frontend-field-text",
-      "resolved": "git+ssh://git@github.com/opentext-idol/fieldtext-js.git#80d1e454b31a62d874bdc6c8f9ec5f9c2dde1a2a",
+      "version": "1.8.0",
+      "resolved": "git+ssh://git@github.com/opentext-idol/fieldtext-js.git#84c549d3ca5160acf8e25fdd23f888743877c61b",
       "dependencies": {
         "pegjs": "opentext-idol/pegjs#0.10.0",
-        "requirejs": "2.3.3",
+        "requirejs": "2.3.7",
         "requirejs-text": "2.0.15",
         "underscore": "1.13.6"
       }
@@ -4746,9 +4747,10 @@
       }
     },
     "node_modules/requirejs": {
-      "version": "2.3.3",
-      "resolved": "https://registry.npmjs.org/requirejs/-/requirejs-2.3.3.tgz",
-      "integrity": "sha512-kuQhb8OsGwN2fCEBBON7CPoM7ywqx0mABRkKDzOZ64BA4WUigWo7BRvv+rgPWdaLuzIwhYzf+XL/BJFxnm4P9Q==",
+      "version": "2.3.7",
+      "resolved": "https://registry.npmjs.org/requirejs/-/requirejs-2.3.7.tgz",
+      "integrity": "sha512-DouTG8T1WanGok6Qjg2SXuCMzszOo0eHeH9hDZ5Y4x8Je+9JB38HdTLT4/VA8OaUhBa0JPVHJ0pyBkM1z+pDsw==",
+      "license": "MIT",
       "bin": {
         "r_js": "bin/r.js",
         "r.js": "bin/r.js"

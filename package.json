@@ -1,13 +1,13 @@
 {
   "name": "hp-autonomy-js-parametric-refinement",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "private": true,
   "dependencies": {
     "backbone": "1.2.3",
-    "hp-autonomy-fieldtext-js": "opentext-idol/fieldtext-js#1.7.0",
+    "hp-autonomy-fieldtext-js": "github:opentext-idol/fieldtext-js#1.8.0",
     "moment": "2.29.4",
     "pegjs": "opentext-idol/pegjs#0.10.0",
-    "requirejs": "2.3.3",
+    "requirejs": "2.3.7",
     "requirejs-text": "2.0.15",
     "underscore": "1.13.6"
   },
