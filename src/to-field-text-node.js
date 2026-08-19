@@ -12,53 +12,52 @@
  * information contained herein is subject to change without notice.
  */
 
-define([
-    'underscore',
-    'fieldtext/js/field-text-parser',
-    './to-fields-and-values',
-    'moment'
-], function(_, parser, toFieldsAndValues, moment) {
-    'use strict';
+'use strict';
 
-    function escapeFieldTextValue(value) {
-        return encodeURIComponent(value);
-    }
+const _ = require('underscore');
+const parser = require('hp-autonomy-fieldtext-js/src/js/field-text-parser');
+const toFieldsAndValues = require('./to-fields-and-values');
+const moment = require('moment');
 
-    function epochMillisToIsoDate(epochMillisArray) {
-        return _.map(epochMillisArray, function(epochMillis) {
-            return moment(epochMillis).milliseconds(0).utc().format();
-        });
-    }
+function escapeFieldTextValue(value) {
+    return encodeURIComponent(value);
+}
 
-    /**
-     * Create a field text node from an array of parametric values. Returns null if the array is empty.
-     * @return {parser.ExpressionNode}
-     */
-    return function(parametricValuesArray) {
-        var fieldsAndValues = toFieldsAndValues(parametricValuesArray);
+function epochMillisToIsoDate(epochMillisArray) {
+    return _.map(epochMillisArray, function(epochMillis) {
+        return moment(epochMillis).milliseconds(0).utc().format();
+    });
+}
 
-        var fieldNodes = [];
-        _.each(fieldsAndValues, function(data, field) {
-            if(data.values && data.values.length > 0) {
-                var operator = data.type === 'Numeric'
-                    ? 'EQUAL'
-                    : 'MATCH';
-                fieldNodes.push(new parser.ExpressionNode(operator, [field], _.map(data.values, escapeFieldTextValue)));
+/**
+ * Create a field text node from an array of parametric values. Returns null if the array is empty.
+ * @return {parser.ExpressionNode}
+ */
+module.exports = function(parametricValuesArray) {
+    var fieldsAndValues = toFieldsAndValues(parametricValuesArray);
+
+    var fieldNodes = [];
+    _.each(fieldsAndValues, function(data, field) {
+        if(data.values && data.values.length > 0) {
+            var operator = data.type === 'Numeric'
+                ? 'EQUAL'
+                : 'MATCH';
+            fieldNodes.push(new parser.ExpressionNode(operator, [field], _.map(data.values, escapeFieldTextValue)));
+        }
+    });
+
+    parametricValuesArray.forEach(function(data) {
+        if(data.range) {
+            if(data.type === 'Numeric') {
+                fieldNodes.push(new parser.ExpressionNode('NRANGE', [data.field], data.range));
+            } else {
+                fieldNodes.push(new parser.ExpressionNode('RANGE', [data.field], epochMillisToIsoDate(data.range)));
             }
-        });
+        }
+    });
 
-        parametricValuesArray.forEach(function(data) {
-            if(data.range) {
-                if(data.type === 'Numeric') {
-                    fieldNodes.push(new parser.ExpressionNode('NRANGE', [data.field], data.range));
-                } else {
-                    fieldNodes.push(new parser.ExpressionNode('RANGE', [data.field], epochMillisToIsoDate(data.range)));
-                }
-            }
-        });
+    return fieldNodes.length
+        ? _.reduce(fieldNodes, parser.AND)
+        : null;
+};
 
-        return fieldNodes.length
-            ? _.reduce(fieldNodes, parser.AND)
-            : null;
-    }
-});
