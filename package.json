@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "backbone": "^1.2.3",
-    "hp-autonomy-fieldtext-js": "github:opentext-idol/fieldtext-js#2.0.0",
+    "hp-autonomy-fieldtext-js": "github:opentext-idol/fieldtext-js#2.0.3",
     "moment": "^2.29.4",
     "underscore": "^1.13.6"
   },
